@@ -7,11 +7,14 @@ import com.example.EmployeeService.generators.ShaEncryptionGenerator;
 import com.example.EmployeeService.interfaces.repositories.EmployeeRepository;
 import com.example.EmployeeService.interfaces.repositories.VacationsRepository;
 import com.example.EmployeeService.interfaces.service.VacationsInterface;
+import com.example.EmployeeService.pojos.VacationDaysInfo;
+import com.example.EmployeeService.pojos.Days;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -113,5 +116,26 @@ public class VacationsService implements VacationsInterface {
 
             }
         }
+    }
+
+    @Override
+    public VacationDaysInfo getDaysPerYear(String email) {
+        VacationDaysInfo vacationDaysInfo = new VacationDaysInfo();
+        vacationDaysInfo.setEmail(email);
+        List<Vacations> all = vacationsRepository.findByVacationsPKEmailIs(email);
+        HashMap<Integer, Days> mapa = new HashMap<>();
+        for(Vacations v: all){
+            int year = (int) v.getVacationsPK().getYear();
+            int totalDays = (int) v.getTotalDays();
+            int usedDays = (int) v.getUsedDays();
+            int availableDays = totalDays-usedDays;
+            Days days = new Days();
+            days.setUsedDays(usedDays);
+            days.setTotalDays(totalDays);
+            days.setAvailableDays(availableDays);
+            mapa.put(year, days);
+        }
+        vacationDaysInfo.setDaysPerYear(mapa);
+        return vacationDaysInfo;
     }
 }

@@ -6,6 +6,7 @@ import com.example.EmployeeService.generators.ShaEncryptionGenerator;
 import com.example.EmployeeService.interfaces.repositories.EmployeeRepository;
 import com.example.EmployeeService.interfaces.repositories.UsedVacationsRepository;
 import com.example.EmployeeService.interfaces.service.UsedVacationsInterface;
+import com.example.EmployeeService.pojos.UsedVacationDaysInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,8 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -136,6 +139,28 @@ public class UsedVacationsService implements UsedVacationsInterface{
         long millis = date.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
         Date datum = new Date(millis);
         return datum;
+    }
+
+    @Override
+    public List<UsedVacationDaysInfo> getUsedDaysInfoFromDate(String email, Date startDate, Date endDate) {
+        List<UsedVacations> all = usedVacationsRepository.findAll();
+
+        List<UsedVacationDaysInfo> usedVacationDaysInfos = new ArrayList<>();
+
+        for(UsedVacations uv: all){
+            if(uv.getEmail().getEmail().equals(email)){
+                if((uv.getStartDate().before(startDate)||uv.getStartDate().compareTo(startDate)==0)
+                        && (uv.getEndDate().after(endDate)||uv.getEndDate().compareTo(endDate)==0) ){
+                    UsedVacationDaysInfo usedVacationDaysInfo = new UsedVacationDaysInfo();
+                    usedVacationDaysInfo.setEmail(email);
+                    usedVacationDaysInfo.setStartDate(uv.getStartDate());
+                    usedVacationDaysInfo.setEndDate(uv.getEndDate());
+                    usedVacationDaysInfos.add(usedVacationDaysInfo);
+                }
+            }
+        }
+
+       return usedVacationDaysInfos;
     }
 
 }

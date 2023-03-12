@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface VacationsRepository extends JpaRepository<Vacations, VacationsPK> {
     List<Vacations> findByVacationsPKYearIsAndVacationsPKEmailIs(int year, String email);
+    List<Vacations> findByVacationsPKEmailIs(String email);
 }

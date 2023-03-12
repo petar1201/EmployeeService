@@ -6,7 +6,7 @@
 package com.example.EmployeeService.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 import jakarta.persistence.*;
 import jakarta.annotation.Nonnull;
