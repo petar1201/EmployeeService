@@ -23,6 +23,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
+/**
+ * UsedVacationsService class implements UsedVacationsInterface and provides
+ * methods for managing used vacation days.
+ */
+
 @Service
 public class UsedVacationsService implements UsedVacationsInterface{
 
@@ -35,41 +40,22 @@ public class UsedVacationsService implements UsedVacationsInterface{
     @Autowired
     private VacationsService vacationsService;
 
-    @Override
-    public void addUsedDaysPerYearPerEmployee(String path) {
 
-        try{
-            Scanner sc = new Scanner(new File(path));
-            sc.useDelimiter("\n");
-            while (sc.hasNext())  //returns a boolean value
-            {   String line = sc.next().trim().replaceAll("\n$", "");
-                String[] fields = line.split(",");
-                if(fields[0].equals("Employee"))continue;
-                String email = fields[0];
-                String monthDayS = fields[2].trim();
-                String year1 = fields[3].replaceAll("^\"|\"$", "").trim();
-                String monthDayE = fields[5].trim();
-                String year2 = fields[6].replaceAll("^\"|\"$", "").trim();
-                String monthStart = monthDayS.split(" ")[0];
-                String dayStart = monthDayS.split(" ")[1];
-                String monthEnd = monthDayE.split(" ")[0];
-                String dayEnd = monthDayE.split(" ")[1];
-                addSingleRow(email, Integer.parseInt(year1),
-                        Month.valueOf(monthStart.toUpperCase()).getValue(),
-                        Integer.parseInt(dayStart),
-                        Integer.parseInt(year2),
-                        Month.valueOf(monthEnd.toUpperCase()).getValue(),
-                        Integer.parseInt(dayEnd));
-            }
-            sc.close();
-        } catch (FileNotFoundException e) {
-            throw new IllegalStateException("File not found: " + e.getMessage());
-        }
-    }
-
+    /**
+     * Adds a single row for an employee's used vacation days to the database and updates their available days accordingly.
+     * The start and end dates are used to calculate the number of business days between them, taking into account weekends and holidays.
+     * @param emaill The email address of the employee.
+     * @param year1 The year of the start date.
+     * @param month1 The month of the start date.
+     * @param day1 The day of the start date.
+     * @param year2 The year of the end date.
+     * @param month2 The month of the end date.
+     * @param day2 The day of the end date.
+     * @throws IllegalStateException If the start date is after the end date.
+     */
     @Override
     public void addSingleRow(String emaill, int year1, int month1, int day1, int year2, int month2, int day2) {
-        String email = ShaEncryptionGenerator.hashString(emaill);
+        String email = emaill;
         Optional<Employee> employee = employeeRepository.findById(email);
         if(employee.isPresent()){
             Date startDate = createDate(year1, month1, day1);
@@ -100,6 +86,12 @@ public class UsedVacationsService implements UsedVacationsInterface{
         }
     }
 
+    /**
+     * Checks if given date is holiday day or not
+     *
+     * @param date the date to be checked
+     * @return the boolean value representing if given date is holiday or not
+     * */
     private boolean isHoliday(LocalDate date){
         int day = date.getDayOfMonth();
         int month = date.getMonthValue();
@@ -118,6 +110,13 @@ public class UsedVacationsService implements UsedVacationsInterface{
         return false;
     }
 
+    /**
+     * Calculates the number of days between the given start and end dates.
+     *
+     * @param startDate the start date
+     * @param endDate the end date
+     * @return the number of days between the start and end dates
+     */
     @Override
     public long calcDays(Date startDate, Date endDate) {
         LocalDate starttDate = startDate.toLocalDate();
@@ -133,6 +132,14 @@ public class UsedVacationsService implements UsedVacationsInterface{
         return businessDays;
     }
 
+    /**
+     * Creates a new Date object with the given year, month, and day.
+     *
+     * @param year the year of the date
+     * @param month the month of the date (1-12)
+     * @param day the day of the date
+     * @return the new Date object
+     */
     @Override
     public Date createDate(int year, int month, int day) {
         LocalDate date = LocalDate.of(year, month, day);
@@ -141,6 +148,14 @@ public class UsedVacationsService implements UsedVacationsInterface{
         return datum;
     }
 
+    /**
+     * Returns a list of UsedVacationsDaysInfo between two dates
+     *
+     * @param startDate start date
+     * @param endDate end date
+     * @param email email of the employee
+     * @return list of UsedVacationDaysInfo for employee with given email
+     */
     @Override
     public List<UsedVacationDaysInfo> getUsedDaysInfoFromDate(String email, Date startDate, Date endDate) {
         List<UsedVacations> all = usedVacationsRepository.findAll();
@@ -149,8 +164,8 @@ public class UsedVacationsService implements UsedVacationsInterface{
 
         for(UsedVacations uv: all){
             if(uv.getEmail().getEmail().equals(email)){
-                if((uv.getStartDate().before(startDate)||uv.getStartDate().compareTo(startDate)==0)
-                        && (uv.getEndDate().after(endDate)||uv.getEndDate().compareTo(endDate)==0) ){
+                if((startDate.before(uv.getStartDate())||uv.getStartDate().compareTo(startDate)==0)
+                        && (endDate.after(uv.getEndDate())||uv.getEndDate().compareTo(endDate)==0) ){
                     UsedVacationDaysInfo usedVacationDaysInfo = new UsedVacationDaysInfo();
                     usedVacationDaysInfo.setEmail(email);
                     usedVacationDaysInfo.setStartDate(uv.getStartDate());

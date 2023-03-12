@@ -19,6 +19,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
+/**
+ * The VacationsService class implements the VacationsInterface and provides methods for managing vacation days for employees.
+ * @author petar
+ */
 @Service
 public class VacationsService implements VacationsInterface {
 
@@ -28,40 +32,23 @@ public class VacationsService implements VacationsInterface {
     @Autowired
     private VacationsRepository vacationsRepository;
 
-    @Override
-    public void addDaysPerYearPerEmployee(String path) {
 
-        int year=-1;
-
-        try{
-            Scanner sc = new Scanner(new File(path));
-            sc.useDelimiter("\n");
-            while (sc.hasNext())  //returns a boolean value
-            {   String nextLine = sc.next();
-                String email = nextLine.split(",")[0];
-                String days = nextLine.split(",")[1];
-                if(email.equals("Employee"))continue;
-                if(email.equals("Vacation year")){
-                    year=Integer.parseInt(""+days.charAt(0)+days.charAt(1)+days.charAt(2)+days.charAt(3));
-                    continue;
-                }
-                if(year == -1)throw new IllegalStateException("Bad header, unknown year");
-                addSingleRow(year, email, Integer.parseInt(days.trim().replaceAll("\n$", "")));
-            }
-            sc.close();
-        } catch (FileNotFoundException e) {
-            throw new IllegalStateException("File not found: " + e.getMessage());
-        }
-    }
-
+    /**
+     * This method adds a single row of vacation data for an employee in a specific year.
+     * If the vacation data already exists for the employee in the given year, the total days are updated.
+     * @param year the year of the vacation data.
+     * @param email the email of the employee.
+     * @param days the number of vacation days.
+     * @throws IllegalStateException if the employee does not exist.
+     */
     @Override
     public void addSingleRow(int year, String email, int days) {
-        Optional<Employee> employee = employeeRepository.findById(ShaEncryptionGenerator.hashString(email));
+        Optional<Employee> employee = employeeRepository.findById(email);
         if(employee.isPresent()){
             Vacations vacations = new Vacations();
             VacationsPK vacationsPK = new VacationsPK();
             vacationsPK.setYear(year);
-            vacationsPK.setEmail(ShaEncryptionGenerator.hashString(email));
+            vacationsPK.setEmail(email);
             vacations.setVacationsPK(vacationsPK);
             vacations.setEmployee(employee.get());
             vacations.setTotalDays(days);
@@ -73,9 +60,17 @@ public class VacationsService implements VacationsInterface {
         }
     }
 
+    /**
+     * This method changes the used vacation days for an employee in a specific year.
+     * If the vacation data does not exist for the employee in the given year, a new row is added.
+     * @param emaill the email of the employee.
+     * @param year the year of the vacation data.
+     * @param days the number of used vacation days to be added.
+     * @throws IllegalStateException if the employee does not exist.
+     */
     @Override
     public void changeUsedDaysForYear(String emaill, int year, int days) {
-        String email = ShaEncryptionGenerator.hashString(emaill);
+        String email = emaill;
         Optional<Employee> employee = employeeRepository.findById(email);
         if(employee.isPresent()){
 
@@ -121,6 +116,13 @@ public class VacationsService implements VacationsInterface {
         }
     }
 
+    /**
+     *
+     * Returns information about vacation days that employee has each year
+     * @param email The email of the employee.
+     * @return return VacationDaysInfo object as information about vacation days
+     *
+     * */
     @Override
     public VacationDaysInfo getDaysPerYear(String email) {
         VacationDaysInfo vacationDaysInfo = new VacationDaysInfo();
