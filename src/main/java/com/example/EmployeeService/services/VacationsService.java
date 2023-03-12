@@ -116,6 +116,9 @@ public class VacationsService implements VacationsInterface {
 
             }
         }
+        else{
+            throw new IllegalStateException("Employee doesnt exist, error while adding new record");
+        }
     }
 
     @Override

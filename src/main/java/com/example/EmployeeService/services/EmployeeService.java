@@ -6,15 +6,20 @@ import com.example.EmployeeService.generators.ShaEncryptionGenerator;
 import com.example.EmployeeService.interfaces.repositories.EmployeeRepository;
 import com.example.EmployeeService.interfaces.service.EmployeeInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Scanner;
 
 @Service
-public class EmployeeService implements EmployeeInterface {
+public class EmployeeService implements EmployeeInterface, UserDetailsService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -64,4 +69,17 @@ public class EmployeeService implements EmployeeInterface {
     }
 
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<Employee> employee = employeeRepository.findById(ShaEncryptionGenerator.hashString(username));
+        if (!employee.isPresent()) {
+            throw new UsernameNotFoundException("Employee not found");
+        }
+        return new User(employee.get().getEmail(), employee.get().getPassword(), new ArrayList<>()) {
+            @Override
+            public String getUsername() {
+                return username;
+            }
+        };
+    }
 }

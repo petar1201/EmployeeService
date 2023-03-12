@@ -7,6 +7,8 @@ import com.example.EmployeeService.services.EmployeeService;
 import com.example.EmployeeService.services.UsedVacationsService;
 import com.example.EmployeeService.services.VacationsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
@@ -27,12 +29,11 @@ public class EmployeeController {
 
     @PostMapping(path="/usedVacations/new")
     @ResponseBody
-    public String addUsedVacationForEmployee(
+    public String addUsedVacationForEmployee(Authentication authentication,
             @RequestParam(name = "startDate", required = true)String startDate,
             @RequestParam(name = "endDate", required = true)String endDate
     ){
-        String email = "";
-        //TODO ADD YOUR OWN EMAIL FROM BASIC AUTH FILTER
+        String email = ((UserDetails) authentication.getPrincipal()).getUsername();
 
         String[] start = startDate.split(" ");
 
@@ -57,20 +58,19 @@ public class EmployeeController {
 
     @GetMapping(path="availableVacations")
     @ResponseBody
-    public VacationDaysInfo getDaysPerYear(){
-        String email="";
-        //TODO ADD YOUR OWN EMAIL FROM BASIC AUTH FILTER
+    public VacationDaysInfo getDaysPerYear(Authentication authentication){
+        String email=((UserDetails) authentication.getPrincipal()).getUsername();
         return vacationsService.getDaysPerYear(email);
     }
 
     @GetMapping(path="usedVacations")
     @ResponseBody
-    public List<UsedVacationDaysInfo> getUsedDaysForDates(
-            @RequestParam(name = "startDate", required = true)String startDate,
-            @RequestParam(name = "endDate", required = true)String endDate
+    public List<UsedVacationDaysInfo> getUsedDaysForDates(Authentication authentication,
+                                                          @RequestParam(name = "startDate", required = true)String startDate,
+                                                          @RequestParam(name = "endDate", required = true)String endDate
     ){
-        String email = "";
-        //TODO ADD YOUR OWN EMAIL FROM BASIC AUTH FILTER
+        String email = ((UserDetails) authentication.getPrincipal()).getUsername();
+
 
         String[] start = startDate.split(" ");
 
