@@ -44,6 +44,13 @@ public class VacationsService implements VacationsInterface {
     public void addSingleRow(int year, String email, int days) {
         Optional<Employee> employee = employeeRepository.findById(email);
         if(employee.isPresent()){
+            if(vacationsRepository.findByVacationsPKYearIsAndVacationsPKEmailIs(year, email).size()>0){
+                Vacations vacations = vacationsRepository.findByVacationsPKYearIsAndVacationsPKEmailIs(year, email).get(0);
+                vacations.setTotalDays(vacations.getTotalDays()+days);
+                vacations.setUsedDays(vacations.getUsedDays()+days);
+                vacationsRepository.saveAndFlush(vacations);
+                return;
+            }
             Vacations vacations = new Vacations();
             VacationsPK vacationsPK = new VacationsPK();
             vacationsPK.setYear(year);
@@ -93,8 +100,8 @@ public class VacationsService implements VacationsInterface {
                         if(totalDays-usedDays+daysAvailable>=days){
                             okay=true;
                             for(long i = year;i>=curYr;i--){
-                                vacations1 = vacationsRepository.findByVacationsPKYearIsAndVacationsPKEmailIs(curYr, email).get(0);
-                                if(year!=curYr)vacations1.setUsedDays(vacations1.getTotalDays());
+                                vacations1 = vacationsRepository.findByVacationsPKYearIsAndVacationsPKEmailIs((int)i, email).get(0);
+                                if(i!=curYr)vacations1.setUsedDays(vacations1.getTotalDays());
                                 else vacations1.setUsedDays(totalDays-(totalDays-usedDays+daysAvailable-days));
                                 vacationsRepository.saveAndFlush(vacations1);
                             }
