@@ -1,25 +1,14 @@
 package com.example.EmployeeService.services;
 
 
-import com.example.EmployeeService.authentication.SecurityConfig;
 import com.example.EmployeeService.entities.Employee;
-import com.example.EmployeeService.generators.ShaEncryptionGenerator;
 import com.example.EmployeeService.interfaces.repositories.EmployeeRepository;
 import com.example.EmployeeService.interfaces.service.EmployeeInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Scanner;
 
 
 /**

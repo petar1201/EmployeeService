@@ -3,7 +3,6 @@ package com.example.EmployeeService.services;
 import com.example.EmployeeService.entities.Employee;
 import com.example.EmployeeService.entities.Vacations;
 import com.example.EmployeeService.entities.VacationsPK;
-import com.example.EmployeeService.generators.ShaEncryptionGenerator;
 import com.example.EmployeeService.interfaces.repositories.EmployeeRepository;
 import com.example.EmployeeService.interfaces.repositories.VacationsRepository;
 import com.example.EmployeeService.interfaces.service.VacationsInterface;

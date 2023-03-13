@@ -2,7 +2,6 @@ package com.example.EmployeeService.services;
 
 import com.example.EmployeeService.entities.Employee;
 import com.example.EmployeeService.entities.UsedVacations;
-import com.example.EmployeeService.generators.ShaEncryptionGenerator;
 import com.example.EmployeeService.interfaces.repositories.EmployeeRepository;
 import com.example.EmployeeService.interfaces.repositories.UsedVacationsRepository;
 import com.example.EmployeeService.interfaces.service.UsedVacationsInterface;
