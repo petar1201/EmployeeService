@@ -1,5 +1,5 @@
 # EmployeeService
-Employee is a MicroService for admins in some company, that is used to search data about employees, vacations, and used vacations and try to add new record of used vacation, this service will be used by employees.
+EmployeeService is a MicroService for employees in some company, that is used to search data about employees, vacations, and used vacations and try to add new record of used vacation, this service will be used by employees only.
 
 ## Getting Started
 To use this service, you need to set up a PostgreSQL database with the name VacationTracker. The port should be 5432, the user should be postgres, and the password is "admin". Once the database is set up, the project is ready to be started.
