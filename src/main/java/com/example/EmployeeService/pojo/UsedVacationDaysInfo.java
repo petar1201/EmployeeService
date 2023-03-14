@@ -1,4 +1,4 @@
-package com.example.EmployeeService.pojos;
+package com.example.EmployeeService.pojo;
 
 import java.sql.Date;
 
@@ -10,17 +10,19 @@ public class UsedVacationDaysInfo {
     String email;
     Date startDate;
     Date endDate;
-
+    int usedDays;
     /**
-     * Constructs an instance of {@code UsedVacationDaysInfo} with the specified email, start date, and end date.
+     * Constructs an instance of {@code UsedVacationDaysInfo} with the specified email, start date, and end date, and num of days vacation lasted.
      * @param email The email address of the employee who used the vacation days.
      * @param startDate The start date of the vacation.
      * @param endDate The end date of the vacation.
+     * @param usedDays num of days vacation lasted
      * */
-    public UsedVacationDaysInfo(String email, Date startDate, Date endDate) {
+    public UsedVacationDaysInfo(String email, Date startDate, Date endDate, int usedDays) {
         this.email = email;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.usedDays = usedDays;
     }
 
     /**
@@ -75,5 +77,21 @@ public class UsedVacationDaysInfo {
      */
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    /**
+     * Returns the num of days vacation lasted
+     * @return The num of days vacation lasted
+     */
+    public int getUsedDays() {
+        return usedDays;
+    }
+
+    /**
+     * Sets the num of days vacation lasted
+     * @param usedDays num of days vacation lasted
+     */
+    public void setUsedDays(int usedDays) {
+        this.usedDays = usedDays;
     }
 }

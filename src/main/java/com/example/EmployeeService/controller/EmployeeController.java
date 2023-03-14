@@ -1,14 +1,12 @@
-package com.example.EmployeeService.controllers;
+package com.example.EmployeeService.controller;
 
 
-import com.example.EmployeeService.pojos.UsedVacationDaysInfo;
-import com.example.EmployeeService.pojos.VacationDaysInfo;
-import com.example.EmployeeService.services.EmployeeService;
-import com.example.EmployeeService.services.UsedVacationsService;
-import com.example.EmployeeService.services.VacationsService;
+import com.example.EmployeeService.pojo.UsedVacationDaysInfo;
+import com.example.EmployeeService.pojo.VacationDaysInfo;
+import com.example.EmployeeService.service.EmployeeService;
+import com.example.EmployeeService.service.UsedVacationsService;
+import com.example.EmployeeService.service.VacationsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;

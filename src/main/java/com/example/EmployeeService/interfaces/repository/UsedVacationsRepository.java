@@ -1,8 +1,7 @@
-package com.example.EmployeeService.interfaces.repositories;
+package com.example.EmployeeService.interfaces.repository;
 
-import com.example.EmployeeService.entities.UsedVacations;
+import com.example.EmployeeService.entity.UsedVacations;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 /**
  * The UsedVacationsRepository interface extends the JpaRepository interface, and provides

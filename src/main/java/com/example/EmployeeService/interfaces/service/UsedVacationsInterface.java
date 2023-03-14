@@ -1,6 +1,6 @@
 package com.example.EmployeeService.interfaces.service;
 
-import com.example.EmployeeService.pojos.UsedVacationDaysInfo;
+import com.example.EmployeeService.pojo.UsedVacationDaysInfo;
 
 import java.sql.Date;
 import java.util.List;

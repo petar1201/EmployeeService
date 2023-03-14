@@ -1,4 +1,4 @@
-package com.example.EmployeeService.pojos;
+package com.example.EmployeeService.pojo;
 
 /**
  * The Days class represents a Plain Old Java Object (POJO) that contains information about an employee's vacation days,

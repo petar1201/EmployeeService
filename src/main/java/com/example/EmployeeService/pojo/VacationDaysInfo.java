@@ -1,4 +1,4 @@
-package com.example.EmployeeService.pojos;
+package com.example.EmployeeService.pojo;
 
 import java.util.HashMap;
 

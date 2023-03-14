@@ -1,22 +1,19 @@
-package com.example.EmployeeService.services;
+package com.example.EmployeeService.service;
 
-import com.example.EmployeeService.entities.Employee;
-import com.example.EmployeeService.entities.Vacations;
-import com.example.EmployeeService.entities.VacationsPK;
-import com.example.EmployeeService.interfaces.repositories.EmployeeRepository;
-import com.example.EmployeeService.interfaces.repositories.VacationsRepository;
+import com.example.EmployeeService.entity.Employee;
+import com.example.EmployeeService.entity.Vacations;
+import com.example.EmployeeService.entity.VacationsPK;
+import com.example.EmployeeService.interfaces.repository.EmployeeRepository;
+import com.example.EmployeeService.interfaces.repository.VacationsRepository;
 import com.example.EmployeeService.interfaces.service.VacationsInterface;
-import com.example.EmployeeService.pojos.VacationDaysInfo;
-import com.example.EmployeeService.pojos.Days;
+import com.example.EmployeeService.pojo.VacationDaysInfo;
+import com.example.EmployeeService.pojo.Days;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
-import java.util.Scanner;
 
 /**
  * The VacationsService class implements the VacationsInterface and provides methods for managing vacation days for employees.

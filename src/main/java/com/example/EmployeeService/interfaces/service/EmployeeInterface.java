@@ -1,6 +1,6 @@
 package com.example.EmployeeService.interfaces.service;
 
-import com.example.EmployeeService.entities.Employee;
+import com.example.EmployeeService.entity.Employee;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.example.EmployeeService.entities;
+package com.example.EmployeeService.entity;
 
 import java.io.Serializable;
 import java.sql.Date;

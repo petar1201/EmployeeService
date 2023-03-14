@@ -1,8 +1,8 @@
-package com.example.EmployeeService.services;
+package com.example.EmployeeService.service;
 
 
-import com.example.EmployeeService.entities.Employee;
-import com.example.EmployeeService.interfaces.repositories.EmployeeRepository;
+import com.example.EmployeeService.entity.Employee;
+import com.example.EmployeeService.interfaces.repository.EmployeeRepository;
 import com.example.EmployeeService.interfaces.service.EmployeeInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

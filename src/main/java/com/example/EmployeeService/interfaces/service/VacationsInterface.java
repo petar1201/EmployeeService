@@ -1,6 +1,6 @@
 package com.example.EmployeeService.interfaces.service;
 
-import com.example.EmployeeService.pojos.VacationDaysInfo;
+import com.example.EmployeeService.pojo.VacationDaysInfo;
 
 /**
  * This interface provides methods to manage employee vacations.

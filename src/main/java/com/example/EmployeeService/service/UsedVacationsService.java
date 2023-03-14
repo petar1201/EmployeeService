@@ -1,26 +1,22 @@
-package com.example.EmployeeService.services;
+package com.example.EmployeeService.service;
 
-import com.example.EmployeeService.entities.Employee;
-import com.example.EmployeeService.entities.UsedVacations;
-import com.example.EmployeeService.interfaces.repositories.EmployeeRepository;
-import com.example.EmployeeService.interfaces.repositories.UsedVacationsRepository;
+import com.example.EmployeeService.entity.Employee;
+import com.example.EmployeeService.entity.UsedVacations;
+import com.example.EmployeeService.interfaces.repository.EmployeeRepository;
+import com.example.EmployeeService.interfaces.repository.UsedVacationsRepository;
 import com.example.EmployeeService.interfaces.service.UsedVacationsInterface;
-import com.example.EmployeeService.pojos.UsedVacationDaysInfo;
+import com.example.EmployeeService.pojo.UsedVacationDaysInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.sql.Date;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Scanner;
 
 /**
  * UsedVacationsService class implements UsedVacationsInterface and provides
@@ -169,6 +165,7 @@ public class UsedVacationsService implements UsedVacationsInterface{
                     usedVacationDaysInfo.setEmail(email);
                     usedVacationDaysInfo.setStartDate(uv.getStartDate());
                     usedVacationDaysInfo.setEndDate(uv.getEndDate());
+                    usedVacationDaysInfo.setUsedDays((int)calcDays(uv.getStartDate(), uv.getEndDate()));
                     usedVacationDaysInfos.add(usedVacationDaysInfo);
                 }
             }
