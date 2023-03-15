@@ -9,7 +9,7 @@ This Service works on localhost:8082 and it is written in SpringBoot. You can ru
 
 For easier testing Docker files are also provided, and this service(applocation) can also be started on Docker. And there are instructions for that:
 1. As i already said it is nedeed to make database in a way described in previous section.
-2. Here is the link ${link} to download target folder and jar file needed to start docker (git refuesed to push files becaouse of their size), same needs to be done in AdminService and link for that is provided in AdminService/readme.md, if target folder and jar in it are available to you without downloading it in here, you do not need to download it in this step and can just skip it
+2. Here is the link ${link} to download target folder with jar file needed to start docker and add that folder to project folder (git refuesed to push files becaouse of their size), same needs to be done in AdminService and link for that is provided in AdminService/readme.md, if target folder and jar in it are available to you without downloading it in here, you do not need to download it in this step and can just skip it
 3. Projects AdminService and EmployeeService need to be in a same directory in order to simplify running it on Docker(this can also be resolved for example with Environment Variables but in terms of making running it on Docker as simple as it can be, just put both projects in a same directory)
 4. Download and open DockerDesktop app
 5. Navigate to AdminService(docker-compose.yml is here) and run this command: docker-compose up
